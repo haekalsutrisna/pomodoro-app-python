@@ -11,10 +11,9 @@ Haekal Pomodoro Timer adalah aplikasi sederhana berbasis Python dan Tkinter yang
 - **Antarmuka GUI**: Menggunakan Tkinter untuk tampilan yang user-friendly.
 
 ## 📸 Tampilan Aplikasi
-
-![alt text](image.png)
-![alt text](image-1.png)
-![alt text](image-2.png)
+<img src="https://github.com/user-attachments/assets/696a095c-b52e-4a23-84a2-d214efe01b35" width="300">
+<img src="https://github.com/user-attachments/assets/1fcb13aa-c5c8-427f-9dd4-df5a313708c2" width="300">
+<img src="https://github.com/user-attachments/assets/16870dab-f961-43a8-8b20-16df39059785" width="300">
 
 ## 🔧 Instalasi
 
