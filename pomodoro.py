@@ -7,7 +7,7 @@ class PomodoroApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Haekal Pomodoro Timer")
-        self.root.geometry("350x350")
+        self.root.geometry("350x400")
 
         self.running = False
         self.time_left = 0
@@ -32,6 +32,10 @@ class PomodoroApp:
         # Session Label
         self.session_label = tk.Label(root, text="Session: 0", font=("Arial", 14))
         self.session_label.pack(pady=5)
+
+        # Session Type Label (Work / Break)
+        self.session_type_label = tk.Label(root, text="", font=("Arial", 12, "bold"))
+        self.session_type_label.pack(pady=5)
 
         # Timer Label
         self.timer_label = tk.Label(root, text="00:00", font=("Arial", 50))
@@ -65,8 +69,8 @@ class PomodoroApp:
     def run_sessions(self):
         """Runs work and break sessions in a loop based on the session count."""
         while self.current_session <= self.total_sessions and self.running:
-            self.session_label.config(text=f"Session: {self.current_session}")  # Update session label
-            self.run_timer(int(self.work_input.get()) * 60, "Work Time")  # Work session
+            self.session_label.config(text=f"Session: {self.current_session}")  
+            self.run_timer(int(self.work_input.get()) * 60, "Work Time")  
 
             if not self.running:
                 break  
@@ -74,15 +78,17 @@ class PomodoroApp:
             if self.current_session < self.total_sessions:
                 self.current_session += 1
                 self.session_label.config(text=f"Session: {self.current_session}")
-                self.run_timer(int(self.break_input.get()) * 60, "Break Time")  # Break session
+                self.run_timer(int(self.break_input.get()) * 60, "Break Time")  
 
             self.current_session += 1  
 
         if self.running:
-            self.timer_label.config(text="🎉 Congratulations! 🎉",font=("Arial", 25))
+            self.timer_label.config(text="🎉 Congratulations! 🎉", font=("Arial", 20))
+            self.session_type_label.config(text="All sessions completed!", fg="green")
 
     def run_timer(self, duration, session_type):
-        """Runs a countdown timer for the given duration."""
+        """Runs a countdown timer for the given duration and updates session type label."""
+        self.session_type_label.config(text=session_type, fg="blue" if session_type == "Work Time" else "red")
         self.time_left = duration
         while self.time_left > 0 and self.running:
             mins, secs = divmod(self.time_left, 60)
@@ -112,6 +118,7 @@ class PomodoroApp:
         self.current_session = 0
         self.timer_label.config(text="00:00")
         self.session_label.config(text="Session: 0")
+        self.session_type_label.config(text="")
 
 # Run the application
 root = tk.Tk()
