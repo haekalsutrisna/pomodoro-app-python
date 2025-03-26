@@ -83,14 +83,14 @@ class PomodoroApp:
             self.session_label.config(text=f"Session: {self.current_session}")
 
             # Fase Kerja
-            self.show_notification(f"Session {self.current_session}", "Work Time starts! Stay focused Sindhy 💪")
+            self.show_notification(f"Session {self.current_session} Work Time", "Work Time starts! Stay focused Sindhy 💪")
             self.run_timer(int(self.work_input.get()) * 60, "Work Time")
 
             if not self.running:
                 break  # Hentikan jika dihentikan
 
             # Fase Istirahat
-            self.show_notification(f"Session {self.current_session}", "Break Time starts! Relax for a moment Sindhy ☕")
+            self.show_notification(f"Session {self.current_session} Break time", "Break Time starts! Relax for a moment Sindhy ☕")
             self.run_timer(int(self.break_input.get()) * 60, "Break Time")
 
         if self.running:
