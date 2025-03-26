@@ -11,7 +11,7 @@ class PomodoroApp:
 
         self.running = False
         self.time_left = 0
-        self.current_session = 0  
+        self.current_session = 0  # Full sessions (work + break)
 
         # Label & Input for Timer Settings
         tk.Label(root, text="Work Time (minutes):").pack()
@@ -56,11 +56,11 @@ class PomodoroApp:
         self.reset_button.grid(row=0, column=2, padx=5, pady=5)
 
     def start_pomodoro(self):
-        """Starts the Pomodoro cycle of work and break sessions."""
+        """Starts the Pomodoro cycle where 1 session = Work + Break."""
         if not self.running:
             try:
-                self.total_sessions = int(self.session_input.get()) * 2 - 1  # Work & Break count (Last break skipped)
-                self.current_session = 1
+                self.total_sessions = int(self.session_input.get())  # Total full Pomodoro cycles
+                self.current_session = 0  # Reset session count
                 self.running = True
                 threading.Thread(target=self.run_sessions, daemon=True).start()
             except ValueError:
@@ -68,19 +68,18 @@ class PomodoroApp:
 
     def run_sessions(self):
         """Runs work and break sessions in a loop based on the session count."""
-        while self.current_session <= self.total_sessions and self.running:
-            self.session_label.config(text=f"Session: {self.current_session}")  
-            self.run_timer(int(self.work_input.get()) * 60, "Work Time")  
+        while self.current_session < self.total_sessions and self.running:
+            self.current_session += 1
+            self.session_label.config(text=f"Session: {self.current_session}")
+
+            # Work Phase
+            self.run_timer(int(self.work_input.get()) * 60, "Work Time")
 
             if not self.running:
-                break  
+                break  # Stop if paused
 
-            if self.current_session < self.total_sessions:
-                self.current_session += 1
-                self.session_label.config(text=f"Session: {self.current_session}")
-                self.run_timer(int(self.break_input.get()) * 60, "Break Time")  
-
-            self.current_session += 1  
+            # Break Phase
+            self.run_timer(int(self.break_input.get()) * 60, "Break Time")
 
         if self.running:
             self.timer_label.config(text="🎉 Congratulations! 🎉", font=("Arial", 20))
@@ -90,6 +89,7 @@ class PomodoroApp:
         """Runs a countdown timer for the given duration and updates session type label."""
         self.session_type_label.config(text=session_type, fg="blue" if session_type == "Work Time" else "red")
         self.time_left = duration
+
         while self.time_left > 0 and self.running:
             mins, secs = divmod(self.time_left, 60)
             self.timer_label.config(text=f"{mins:02d}:{secs:02d}")
