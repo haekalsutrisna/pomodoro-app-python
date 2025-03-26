@@ -55,7 +55,7 @@ class PomodoroApp:
         """Starts the Pomodoro cycle of work and break sessions."""
         if not self.running:
             try:
-                self.total_sessions = int(self.session_input.get()) * 2  # Work & Break count as separate sessions
+                self.total_sessions = int(self.session_input.get()) * 2 - 1  # Work & Break count (Last break skipped)
                 self.current_session = 1
                 self.running = True
                 threading.Thread(target=self.run_sessions, daemon=True).start()
@@ -79,7 +79,7 @@ class PomodoroApp:
             self.current_session += 1  
 
         if self.running:
-            self.timer_label.config(text="Pomodoro Done!")
+            self.timer_label.config(text="🎉 Congratulations! 🎉")
 
     def run_timer(self, duration, session_type):
         """Runs a countdown timer for the given duration."""
