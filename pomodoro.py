@@ -8,6 +8,7 @@ class PomodoroApp:
         self.root = root
         self.root.title("Haekal Pomodoro Timer")
         self.root.geometry("350x400")
+        self.root.iconbitmap("pomodoro.ico")
 
         self.running = False
         self.time_left = 0
@@ -27,7 +28,7 @@ class PomodoroApp:
         tk.Label(root, text="Number of Sessions:").pack()
         self.session_input = tk.Entry(root)
         self.session_input.pack()
-        self.session_input.insert(0, "4")
+        self.session_input.insert(0, "2")
 
         # Session Label
         self.session_label = tk.Label(root, text="Session: 0", font=("Arial", 14))
