@@ -79,7 +79,7 @@ class PomodoroApp:
             self.current_session += 1  
 
         if self.running:
-            self.timer_label.config(text="🎉 Congratulations! 🎉")
+            self.timer_label.config(text="🎉 Congratulations! 🎉",font=("Arial", 25))
 
     def run_timer(self, duration, session_type):
         """Runs a countdown timer for the given duration."""
